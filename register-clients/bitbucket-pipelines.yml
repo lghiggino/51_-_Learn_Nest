@@ -1,0 +1,43 @@
+image: node:18.7.0
+definitions:
+    services:
+        docker:
+            memory: 4096
+    script: &setupAWSCLI apt-get update && apt-get install -y python3-pip;
+        pip3 install -U awscli;
+        aws --version;
+        eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email);
+
+pipelines:
+    default:
+        - step: &tests
+              name: Run Tests
+              max-time: 7
+              caches:
+                  - node
+              script:
+                  # - echo "$NPMRC" | base64 -di > ./.npmrc
+                  - npm ci # --legacy-peer-deps
+                  - npm run build || true # somente para garantir que nao roda em cima do build
+                  - npm run test:ci
+        - step: &buildImage
+              name: Build Image
+              services:
+                  - docker
+              script:
+                  - *setupAWSCLI
+                  - docker build -f ./Dockerfile -t 010984114721.dkr.ecr.us-east-1.amazonaws.com/gsk:develop .
+                  - docker push 010984114721.dkr.ecr.us-east-1.amazonaws.com/gsk:develop
+                  - aws ecs update-service --cluster dev-ecs-gsk --service dev-gsk-api-api-service --force-new-deployment > out.txt
+    branches:
+        "**":
+            - step: *tests
+            # - step: *syncGithubMainAccount
+            # - step: *buildImage
+        develop:
+            - step: *tests
+            # - step: *syncGithubMainAccount
+            - step: *buildImage
+options:
+    docker: true
+    size: 2x
