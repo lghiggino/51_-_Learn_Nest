@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-
-// import { AuthModule } from './modules/auth/auth.module';
 import { HealthModule } from './modules/health/health.module';
-// import { UsersModule } from './modules/users/users.module';
+import { LeadsModule } from './modules/leads/leads.module';
+// import { AuthModule } from './modules/auth/auth.module';
 import environments from '@/config/environments';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +18,7 @@ import environments from '@/config/environments';
       inject: [ConfigService],
     }),
     HealthModule,
-    // UsersModule,
+    LeadsModule,
   ],
   controllers: [],
   providers: [],

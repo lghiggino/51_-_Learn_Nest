@@ -13,7 +13,7 @@ function buildSwaggerDocumentation(app: INestApplication) {
     .addBasicAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('cr/doc', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 }
 
 async function bootstrap() {
