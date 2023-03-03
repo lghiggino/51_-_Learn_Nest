@@ -54,33 +54,11 @@ export class LeadRepository {
     return jsonData;
   }
 
-  async updateLead(id: string, lead: UpdateLeadDTO): Promise<Lead> {
+  async updateLead(cnpj: string, lead: UpdateLeadDTO): Promise<Lead> {
     const updatedClient = await this.model
-      .findByIdAndUpdate(id, lead, { new: true })
+      .findOneAndUpdate({ cnpj }, lead, { new: true })
       .exec();
     const jsonData = updatedClient.toJSON();
     return jsonData;
   }
-
-  //   async findPatientsByDoctorCrm(crm: string): Promise<Lead[] | undefined> {
-  //     const leads = await this.model
-  //       .find({
-  //         'doctorInfo.crm': crm,
-  //         $and: [
-  //           {
-  //             role: Role.CLIENT,
-  //           },
-  //         ],
-  //       })
-  //       .exec();
-  //     if (leads.length > 0) {
-  //       const leadList: Lead[] = [];
-  //       for (const lead of leads) {
-  //         const jsonData = lead.toJSON();
-  //         leadList.push(jsonData);
-  //       }
-  //       return leadList;
-  //     }
-  //     return leads;
-  //   }
 }

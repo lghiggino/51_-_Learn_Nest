@@ -113,6 +113,12 @@ class Associate {
   @IsString()
   @IsOptional()
   pepLevel?: string;
+
+  @ApiPropertyOptional({ type: [Address] })
+  @IsOptional()
+  @ValidateNested()
+  @IsArray()
+  address?: Address[];
 }
 
 class RegisterStatus {

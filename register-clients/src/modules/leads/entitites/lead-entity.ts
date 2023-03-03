@@ -94,6 +94,14 @@ class Associate {
   @ApiResponseProperty()
   @Prop({ default: null })
   pepLevel: string;
+
+  @ApiResponseProperty({ type: [Address] })
+  @Prop({
+    type: Array,
+    default: [],
+    validate: (value: Address[]) => value.length <= 1,
+  })
+  address: Address[];
 }
 
 @Schema()
@@ -141,7 +149,7 @@ export class Lead {
   @Prop({
     type: Array,
     default: [],
-    validate: (value: Address[]) => value.length <= 2,
+    validate: (value: Address[]) => value.length <= 1,
   })
   address: Address[];
 

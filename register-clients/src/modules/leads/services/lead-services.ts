@@ -1,11 +1,10 @@
 import { S3FileStorageService } from '@/services/s3.service';
-// TODO serviço de ativação da conta suspenso (OBS: precisa da implementação com a bcare)
+// TODO serviço de ativação da conta suspenso
 /* import { MailTemplateService } from '@/services/mail-template.service';
 import { SendMailService } from '@/services/sendmail.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt'; */
 import { Injectable, Logger } from '@nestjs/common';
-import { now } from 'mongoose';
 import { CreateLeadDTO } from '../dto/create-lead-dto';
 import { CreateShallowLeadDTO } from '../dto/create-shallow-lead-dto';
 import { UpdateLeadDTO } from '../dto/update-lead-dto';
@@ -70,9 +69,21 @@ export class LeadServices {
             occupation: '',
             monthlyIncome: '',
             pepLevel: '',
+            address: [
+              {
+                zipcode: '',
+                country: '',
+                city: '',
+                uf: '',
+                street: '',
+                number: '',
+                district: '',
+                complement: '',
+              },
+            ],
           },
         ],
-        registerStatus: '',
+        registerStatus: this.setCurrentStatus('created'),
         registerStatusHistory: [this.setStatusHistory('created')],
       };
 
@@ -94,21 +105,34 @@ export class LeadServices {
     };
   }
 
-  async updateLead(id: string, lead: UpdateLeadDTO) {
+  private setCurrentStatus(statusValue: string) {
+    return statusValue;
+  }
+
+  async updateLead(cnpj: string, lead: UpdateLeadDTO) {
     try {
-      const leadExists = await this.leadRepository.findById(id);
+      const leadExists = await this.leadRepository.findByCnpj(cnpj);
 
       if (!leadExists) {
         this.logger.log('[updateClient] Usuário não encontrado');
         this.logger.debug(
-          `[updateClient] não foi possível encontrar usuário com id[${id}]`,
+          `[updateClient] não foi possível encontrar usuário com cnpj[${cnpj}]`,
         );
         throw new LeadNotFoundException();
       }
 
+      const newLead = {
+        cnpj: leadExists.cnpj,
+        registerStatus: this.setCurrentStatus('added company data'),
+        registerStatusHistory: leadExists.registerStatusHistory.concat(
+          this.setStatusHistory('added company data'),
+        ),
+        ...lead,
+      };
+
       const updatedLead = await this.leadRepository.updateLead(
-        leadExists._id,
-        lead,
+        leadExists.cnpj,
+        newLead,
       );
 
       return updatedLead;

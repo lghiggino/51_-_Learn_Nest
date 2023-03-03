@@ -1,6 +1,7 @@
 import { FileUploadResponse } from '@/models/file-upload-response';
 import {
   Body,
+  ConsoleLogger,
   Controller,
   Get,
   Post,
@@ -29,10 +30,8 @@ import { Lead } from '../entitites/lead-entity';
 import { LeadServices } from '../services/lead-services';
 
 interface RequestData {
-  lead: {
-    id: string;
-    name: string;
-    email: string;
+  body: {
+    cnpj: string;
   };
 }
 
@@ -75,7 +74,8 @@ export class LeadController {
     @Request() req: RequestData,
     @Body() body: UpdateLeadDTO,
   ) {
-    const lead = await this.leadService.updateLead(req.lead.id, body);
+    console.log(req.body);
+    const lead = await this.leadService.updateLead(req.body.cnpj, body);
     return lead;
   }
 
@@ -84,7 +84,7 @@ export class LeadController {
   // @ApiBearerAuth()
   @Get('/lead/data')
   async getLeadData(@Request() req: RequestData) {
-    const leadData = await this.leadService.getLeadData(req.lead.id);
+    const leadData = await this.leadService.getLeadData(req.body.cnpj);
     return leadData;
   }
 }

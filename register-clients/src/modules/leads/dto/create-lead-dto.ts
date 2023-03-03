@@ -101,6 +101,10 @@ class Associate {
   @ApiProperty()
   @IsString()
   pepLevel: string;
+
+  @ApiProperty({ type: [Address] })
+  @ValidateNested()
+  address?: Address[];
 }
 
 class RegisterStatus {
