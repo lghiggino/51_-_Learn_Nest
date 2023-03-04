@@ -99,7 +99,7 @@ class Associate {
   @Prop({
     type: Array,
     default: [],
-    validate: (value: Address[]) => value.length <= 1,
+    validate: (value: Address[]) => value.length <= 2,
   })
   address: Address[];
 }
@@ -149,7 +149,7 @@ export class Lead {
   @Prop({
     type: Array,
     default: [],
-    validate: (value: Address[]) => value.length <= 1,
+    validate: (value: Address[]) => value.length <= 2,
   })
   address: Address[];
 
