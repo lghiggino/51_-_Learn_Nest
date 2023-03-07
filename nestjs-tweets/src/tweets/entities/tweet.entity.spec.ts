@@ -17,8 +17,9 @@ describe('Tweets', () => {
   describe('in Mongo DB', () => {
     let connection: mongoose.Mongoose;
     beforeEach(async () => {
+      const host = 'localhost';
       connection = await mongoose.connect(
-        'mongodb://root:root@localhost:27017/tweets_test?authSource=admin',
+        `mongodb://root:root@${host}:27017/tweets_test?authSource=admin`,
       );
     });
 
