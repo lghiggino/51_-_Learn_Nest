@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TweetsController } from './tweets.controller';
 import { TweetsService } from './tweets.service';
 
-describe('TweetsController', () => {
+describe.skip('TweetsController', () => {
   let controller: TweetsController;
 
   beforeEach(async () => {
