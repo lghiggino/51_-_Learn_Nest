@@ -18,7 +18,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.ethereal.email',
+        host: 'smtp.sendgrid.net',
         port: '587',
         auth: {
           user: 'user',
