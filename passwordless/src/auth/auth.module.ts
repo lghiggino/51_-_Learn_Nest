@@ -6,6 +6,7 @@ import { MagicLoginStrategy } from './magiclogin.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -14,6 +15,16 @@ import { JwtStrategy } from './jwt.strategy';
     JwtModule.register({
       secret: 'jwt-secret',
       signOptions: { expiresIn: '24h' },
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.ethereal.email',
+        port: '587',
+        auth: {
+          user: 'user',
+          pass: 'pass',
+        },
+      },
     }),
   ],
   controllers: [AuthController],
