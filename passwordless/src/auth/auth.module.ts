@@ -7,9 +7,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     UsersModule,
     PassportModule,
     JwtModule.register({
@@ -19,10 +21,10 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MailerModule.forRoot({
       transport: {
         host: 'smtp.sendgrid.net',
-        port: '587',
+        // port: '587',
         auth: {
-          user: 'user',
-          pass: 'pass',
+          user: 'apikey',
+          pass: process.env.SENDGRID_KEY,
         },
       },
     }),
