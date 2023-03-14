@@ -29,10 +29,10 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           pass: process.env.SENDGRID_KEY,
         },
       },
-      // template: {
-      //   dir: join(__dirname, 'mails'),
-      //   adapter: new HandlebarsAdapter(),
-      // },
+      template: {
+        dir: join(__dirname, '../', 'mails'),
+        adapter: new HandlebarsAdapter(),
+      },
     }),
   ],
   controllers: [AuthController],
