@@ -24,6 +24,8 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@swc/core": "^1.3.40",
+    "@swc/jest": "^0.2.24",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
@@ -59,7 +61,7 @@
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.(t|j)s$": "@swc/jest"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
