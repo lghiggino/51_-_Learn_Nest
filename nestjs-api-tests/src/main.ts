@@ -5,8 +5,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 function buildSwaggerDocumentation(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('register-client')
-    .setDescription('The client-register project api')
+    .setTitle('Nest With Tests Api')
+    .setDescription('The Nest With Tests Api project')
     .setVersion('1.0')
     .addBearerAuth()
     .addBasicAuth()
