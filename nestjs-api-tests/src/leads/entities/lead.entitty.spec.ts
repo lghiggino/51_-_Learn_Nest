@@ -65,5 +65,6 @@ describe('Lead Entity', () => {
     };
     expect(lead.cnpj).toBe('52437879000137');
     expect(lead.email).toBe('teste@lead.com');
+    expect(lead.companySize).toBe('');
   });
 });
