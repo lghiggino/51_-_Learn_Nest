@@ -26,6 +26,6 @@ async function bootstrap() {
     origin: '*',
   });
   buildSwaggerDocumentation(app);
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(3333);
 }
 bootstrap();
