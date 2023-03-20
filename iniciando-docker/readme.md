@@ -32,3 +32,7 @@ Permite que a edição de arquivos e projetos na nossa máquina seja sincronizad
 
 - Setando o volume local dentro do container
 ```docker run -v $(pwd):/usr/share/nginx/html-p 8000:80 -d nginx:1.19.10-alpine```
+A partir daqui todo arquivo colocado no PWD será pareado dentro do container.
+Se criarmos um index.html, ele será o mesmo do container e qualquer mudança feita em qualquer uma das pontas refletirá na outra
+
+continar aqui: https://www.youtube.com/live/BICy_5hXWWs?feature=share&t=5042
