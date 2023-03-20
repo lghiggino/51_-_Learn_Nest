@@ -2,13 +2,13 @@
 
 ```docker run nginx:1.19.10-alpine```
 
-## binding de porta
-cria o acesso da máquina host para o servidor do docker
+### binding de porta
+Cria o acesso da máquina host para o servidor do docker
 
 ```docker run -p 8000:80  nginx:1.19.10-alpine```
 
 
-### entrando no container para criar/editar arquivos
+#### entrando no container para criar/editar arquivos
 
 ```docker exec -it <container_id | container_name> sh```
 
@@ -21,4 +21,14 @@ cria o acesso da máquina host para o servidor do docker
 ``` vi index.html```
 
 
-## volumes
+### volumes
+Permite que a edição de arquivos e projetos na nossa máquina seja sincronizada com o container
+
+- Rodando o container em modo detached
+```docker run -p 8000:80 -d nginx:1.19.10-alpine```
+
+- Parando o container detached
+``` docker stop <container_id | container_name>```
+
+- Setando o volume local dentro do container
+```docker run -v $(pwd):/usr/share/nginx/html-p 8000:80 -d nginx:1.19.10-alpine```
