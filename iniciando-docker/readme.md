@@ -35,4 +35,22 @@ Permite que a edição de arquivos e projetos na nossa máquina seja sincronizad
 A partir daqui todo arquivo colocado no PWD será pareado dentro do container.
 Se criarmos um index.html, ele será o mesmo do container e qualquer mudança feita em qualquer uma das pontas refletirá na outra
 
-continar aqui: https://www.youtube.com/live/BICy_5hXWWs?feature=share&t=5042
+### container
+É um agente baseado na imagem. O container é mutável, mas a imagem é Imutável.
+
+#### Dockerfile
+É onde vamos descrever como a imagem será criada.
+
+- Gerando uma nova imagem customizada:
+    - Cria-se um Dockerfile que copia o que for necessário para dentro da imagem
+    - ```COPY index.html /usr/share/nginx/html```
+    - ```docker build -t custom-nginx .```
+    - Com a imagem em questão é possível rodar a imagem criad
+    - ```docker ls```
+    - ```docker run -d -p 8000:80 custom-nginx```
+
+- Como alterar a imagem?
+    - ```docker stop <imageName>```
+    - altere os arquivos
+    - ```docker build -t custom-nginx .```
+    - ```docker run -d -p 8000:80 custom-nginx ```
