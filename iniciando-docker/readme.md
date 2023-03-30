@@ -54,3 +54,6 @@ Se criarmos um index.html, ele será o mesmo do container e qualquer mudança fe
     - altere os arquivos
     - ```docker build -t custom-nginx .```
     - ```docker run -d -p 8000:80 custom-nginx ```
+
+
+Continuar aqui: https://www.youtube.com/live/BICy_5hXWWs?feature=share&t=6123
