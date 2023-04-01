@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCoffeeDto } from './dtos/createCoffeeDto';
 import { UpdateCofeeDto } from './dtos/updateCoffeeDto';
 import { Coffee } from './entities/coffee.entity';
@@ -12,6 +17,12 @@ export class CoffeesService {
       brand: 'Buddy Brew',
       flavors: ['Chocolate', 'Vanilla'],
     },
+    {
+      id: 2,
+      name: 'Japanese Rose Blossom Roast',
+      brand: 'Hattori Hanzō Brew',
+      flavors: ['Rose', 'Miso'],
+    },
   ];
 
   findAll() {
@@ -19,7 +30,12 @@ export class CoffeesService {
   }
 
   findOne(id: string) {
-    return this.coffees.find((item) => item.id === +id);
+    const existingCoffee = this.coffees.find((item) => item.id === +id);
+    if (!existingCoffee) {
+      throw new NotFoundException(`Coffee #${id} was not found`);
+    }
+
+    return existingCoffee;
   }
 
   create(createCoffeeDto: CreateCoffeeDto) {
@@ -32,10 +48,15 @@ export class CoffeesService {
   }
 
   update(id: string, updateCoffeeDto: UpdateCofeeDto) {
-    const existingCoffee = this.findOne(id);
+    const existingCoffee = this.coffees.find((item) => item.id === +id);
     if (existingCoffee) {
       const updatedCoffee = Object.assign(existingCoffee, updateCoffeeDto);
       return updatedCoffee;
+    } else {
+      throw new HttpException(
+        `Coffee #${id} was not found to be updated`,
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
