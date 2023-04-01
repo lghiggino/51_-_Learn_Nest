@@ -4,8 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCoffeeDto } from './dtos/createCoffeeDto';
-import { UpdateCofeeDto } from './dtos/updateCoffeeDto';
+import { CreateCoffeeDto } from './dto/createCoffee.dto';
+import { UpdateCofeeDto } from './dto/updateCoffee.dto';
 import { Coffee } from './entities/coffee.entity';
 
 @Injectable()
