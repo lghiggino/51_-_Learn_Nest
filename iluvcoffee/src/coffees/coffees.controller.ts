@@ -11,7 +11,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
-import { CreateCoffeeDto } from './dtos/createCoffeeDto';
+import { CreateCoffeeDto } from './dto/createCoffee.dto';
+import { UpdateCofeeDto } from './dto/updateCoffee.dto';
 
 type PaginationQueryProps = {
   limit: number;
@@ -35,13 +36,13 @@ export class CoffeesController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() body: CreateCoffeeDto) {
-    return this.coffeesService.create(body);
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return this.coffeesService.update(id, body);
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCofeeDto) {
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
