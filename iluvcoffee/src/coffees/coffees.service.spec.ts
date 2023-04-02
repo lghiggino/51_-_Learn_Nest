@@ -31,4 +31,6 @@ describe('CoffeesService', () => {
     const result = service.update('1', updateCoffeeDto);
     expect(result).toMatchObject(updateCoffeeDto);
   });
+
+  it('should remove a single coffee', () => {});
 });
