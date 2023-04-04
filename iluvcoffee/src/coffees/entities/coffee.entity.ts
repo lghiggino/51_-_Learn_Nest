@@ -1,7 +1,6 @@
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -24,13 +23,4 @@ export class Coffee {
   @JoinTable()
   @ManyToMany((type) => Flavor, (flavor) => flavor.coffees)
   flavors: string[];
-
-  // @CreateDateColumn()
-  // createdAt: Date;
-
-  // @UpdateDateColumn()
-  // updatedAt: Date;
-
-  // @DeleteDateColumn()
-  // deletedAt: Date;
 }
