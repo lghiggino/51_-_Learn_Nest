@@ -5,8 +5,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { query } from 'express';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
-import { Repository } from 'typeorm';
+import { CoffeeEvent } from 'src/events/entities/event.entity/event.entity';
+import { Repository, Connection } from 'typeorm';
 import { CreateCoffeeDto } from './dto/createCoffee.dto';
 import { UpdateCofeeDto } from './dto/updateCoffee.dto';
 import { Coffee } from './entities/coffee.entity';
@@ -19,6 +21,7 @@ export class CoffeesService {
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorsRepository: Repository<Flavor>,
+    private readonly connection: Connection,
   ) {}
 
   async findAll(paginationQuery: PaginationQueryDto) {
@@ -52,8 +55,7 @@ export class CoffeesService {
       ...createCoffeeDto,
       flavors,
     });
-    await this.coffeeRepository.save(newCoffee);
-    return 'created';
+    return await this.coffeeRepository.save(newCoffee);
   }
 
   async update(id: string, updateCoffeeDto: UpdateCofeeDto) {
@@ -82,6 +84,31 @@ export class CoffeesService {
     });
 
     await this.coffeeRepository.remove(existingCoffee);
+  }
+
+  async recommendCoffee(coffee: Coffee) {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      coffee.recomendations++;
+
+      const recommendEvent = new CoffeeEvent();
+      recommendEvent.name = 'recommend_coffee';
+      recommendEvent.type = 'coffee';
+      recommendEvent.payload = { coffeeId: coffee.id };
+
+      await queryRunner.manager.save(coffee);
+      await queryRunner.manager.save(recommendEvent);
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async preloadFlavorByName(name: string): Promise<Flavor> {
