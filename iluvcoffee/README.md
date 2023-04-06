@@ -74,13 +74,8 @@ Nest is [MIT licensed](LICENSE).
 
 
 #### Part Finished and Commit 
-End of part2:
-End of part3:  b38c21b1d4c9ac526a8c2c794b736ad9af60476e
-
-
-
-
-
+End of part2: 0377cdb58788bb57dd9afbb3a77b3f77f454a661
+End of part3: b38c21b1d4c9ac526a8c2c794b736ad9af60476e
 
 
 
