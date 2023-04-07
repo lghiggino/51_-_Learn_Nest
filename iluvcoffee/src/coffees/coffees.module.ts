@@ -13,7 +13,7 @@ import { Flavor } from './entities/flavor.entity';
   exports: [CoffeesService],
   providers: [
     CoffeesService,
-    { provide: COFFEE_BRANDS, useValue: ['Buddy Brew, Nescafe'] },
+    { provide: COFFEE_BRANDS, useFactory: () => ['Buddy Brew, Nescafe'] },
   ],
 })
 export class CoffeesModule {}
