@@ -1,2 +1,3 @@
-token-auth-app/dev.env
-iluvcoffee/.env
+**/.env
+**/node_modules
+**/build
